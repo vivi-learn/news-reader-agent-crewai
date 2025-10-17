@@ -32,6 +32,12 @@ class NewsReaderAgent:
             config=self.agents_config["curator_agent"],
         )
 
+    @agent
+    def translator_agent(self):
+        return Agent(
+            config=self.agents_config["translator_agent"],
+        )
+
     @task
     def content_harvesting_task(self):
         return Task(
@@ -49,6 +55,12 @@ class NewsReaderAgent:
         return Task(
             config=self.tasks_config["final_report_assembly_task"],
         )
+    
+    @task
+    def translate_task(self):
+        return Task(
+            config=self.tasks_config["translate_task"],
+        )
 
     @crew
     def crew(self):
@@ -58,9 +70,4 @@ class NewsReaderAgent:
             verbose=True,
         )
 
-# 실행 예시
-result = NewsReaderAgent().crew().kickoff(inputs={"topic": "Cambodia Thailand War."})
-
-# 출력 결과
-for task_output in result.tasks_output:
-    print(task_output)
+NewsReaderAgent().crew().kickoff(inputs={"topic": "If SpaceX goes public, when will it?"})
